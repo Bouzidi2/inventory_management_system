@@ -34,6 +34,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
+import java.util.Locale;
+import java.util.ResourceBundle;
+
+
 @RestController
 @RequestMapping(ResourceConstants.ROOM_RESERVATION_V1)
 @CrossOrigin
@@ -152,5 +156,30 @@ public class ReservationResource {
 
         return new ResponseEntity<Void>(HttpStatus.NO_CONTENT);
     }
+
+    @RequestMapping(path = "/welcome", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public String[] getWelcomeMessages() throws InterruptedException {
+
+        final String[] messages = new String[2];
+
+        Thread enThread = new Thread(() -> {
+            ResourceBundle rb = ResourceBundle.getBundle("welcome", Locale.US);
+            messages[0] = rb.getString("hello") + " " + rb.getString("welcome");
+        });
+
+        Thread frThread = new Thread(() -> {
+            ResourceBundle rb = ResourceBundle.getBundle("welcome", Locale.CANADA_FRENCH);
+            messages[1] = rb.getString("hello") + " " + rb.getString("welcome");
+        });
+
+        enThread.start();
+        frThread.start();
+
+        enThread.join();
+        frThread.join();
+
+        return messages;
+    }
+
 
 }

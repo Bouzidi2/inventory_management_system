@@ -936,4 +936,16 @@ footer #socialmedia ul li img {
   border-radius: 50%;
 }
 
+.welcome-text {
+  font-size: 3.5rem;
+  color: white;
+  font-weight: 700;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.welcome-text div {
+  margin-bottom: 10px;
+}
+
 /*# sourceMappingURL=style.css.map */
