@@ -35,6 +35,10 @@
 
       <div class="row">
         <div class="col-12">
+          <div *ngIf="presentationMessage" class="presentation-time">
+            {{ presentationMessage }}
+          </div>
+
           <div class="gallery">
             <img src="assets/images/intro_room.jpg" alt="Intro Gallery Room Sample Pictures">
             <img src="assets/images/intro_pool.jpg" alt="Intro Gallery Pool Sample Pictures">

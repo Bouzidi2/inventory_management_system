@@ -25,8 +25,9 @@ export class AppComponent implements OnInit {
   currentCheckInVal!: string;
   currentCheckOutVal!: string;
 
-  // ✅ B1 welcome messages
+
   welcomeMessages: string[] = [];
+  presentationMessage: string = '';
 
   ngOnInit() {
     this.roomsearch = new FormGroup({
@@ -41,17 +42,28 @@ export class AppComponent implements OnInit {
       this.currentCheckOutVal = x.checkout;
     });
 
-    // ✅ B1 load welcome messages for homepage (#welcome)
+
     this.getWelcomeMessages().subscribe(msgs => {
       this.welcomeMessages = msgs;
     });
+
+    this.getPresentationMessage().subscribe((msg: string) => {
+      this.presentationMessage = msg;
+    });
   }
 
-  // ✅ B1 welcome endpoint call
+
   getWelcomeMessages(): Observable<string[]> {
     return this.httpClient.get<string[]>(
       this.baseURL + '/room/reservation/v1/welcome',
       { responseType: 'json' }
+    );
+  }
+
+getPresentationMessage(): Observable<string> {
+    return this.httpClient.get(
+      this.baseURL + '/room/reservation/v1/presentation',
+      { responseType: 'text' }
     );
   }
 

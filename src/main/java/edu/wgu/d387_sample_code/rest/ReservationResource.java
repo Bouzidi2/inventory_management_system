@@ -37,6 +37,10 @@ import java.util.Optional;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
+import edu.wgu.d387_sample_code.convertor.TimeZoneConverter;
+import java.time.LocalTime;
+
+
 
 @RestController
 @RequestMapping(ResourceConstants.ROOM_RESERVATION_V1)
@@ -179,6 +183,21 @@ public class ReservationResource {
         frThread.join();
 
         return messages;
+    }
+    @RequestMapping(path = "/presentation", method = RequestMethod.GET, produces = MediaType.TEXT_PLAIN_VALUE)
+    public String getPresentationTimes() {
+
+        LocalDate date = LocalDate.now();
+
+        // Picking ET to be Ontario, CAN
+        LocalTime presentationEtTime = LocalTime.of(12, 30);
+
+        String et = TimeZoneConverter.convert(date, presentationEtTime, TimeZoneConverter.ET, TimeZoneConverter.ET);
+        String mt = TimeZoneConverter.convert(date, presentationEtTime, TimeZoneConverter.ET, TimeZoneConverter.MT);
+        String utc = TimeZoneConverter.convert(date, presentationEtTime, TimeZoneConverter.ET, TimeZoneConverter.UTC);
+
+
+        return "Join us for an online live presentation at " + et + " ET / " + mt + " MT / " + utc + " UTC";
     }
 
 
